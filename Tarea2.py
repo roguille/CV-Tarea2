@@ -3,16 +3,33 @@
 import numpy as np
 import cv2
 import pymeanshift as pms
+import json
 
 cap = cv2.VideoCapture(0)
 
 printMenu = False
 mySegmenter = pms.Segmenter()
-mySegmenter.spatial_radius = 6
-mySegmenter.range_radius = 4.5
-mySegmenter.min_density = 300
 mkeyPress = False
 wKeyPress = False
+
+#params = {}
+#params['ms'] = []
+#params['ms'].append({
+#    'spatial_radius': mySegmenter.spatial_radius,
+#    'range_radius': mySegmenter.range_radius,
+#    'min_density': mySegmenter.min_density
+#})
+
+#with open('params.txt', 'w') as outfile:
+#    json.dump(params, outfile)
+
+with open('params.txt', 'r') as json_file:
+    params = json.load(json_file)
+
+for ms in params['ms']:
+    mySegmenter.spatial_radius = ms['spatial_radius']
+    mySegmenter.range_radius = ms['range_radius']
+    mySegmenter.min_density = ms['min_density']
 
 while(True):
 
@@ -35,7 +52,7 @@ while(True):
     key = cv2.waitKey(2)
 
     if key & 0xFF == ord('q'):
-        breaks
+        break
     elif key & 0xFF == ord('m'):
         mKeyPress = True
         wKeyPress = False
@@ -45,7 +62,8 @@ while(True):
     elif key & 0xFF == ord('s') and mKeyPress:
         print("Using Mean Shift Algorithm!")
         (segmentedImage, labelsImage, numberRegions) = mySegmenter(frame)
-        cv2.imshow('Tarea2: Imagen Segmentada',segmentedImage)
+        cv2.imshow('Tarea2: Imagen Segmentada', segmentedImage)
+        print(labelsImage)
         mKeyPress = False
     elif key & 0xFF == ord('s') and wKeyPress:
         print("Using Watersheds Algorithm!")
