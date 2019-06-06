@@ -32,10 +32,10 @@ while(True):
     # Display the resulting frame
     cv2.imshow('Tarea2: Segmentacion de imagen',frame)
 
-    key = cv2.waitKey(1)
+    key = cv2.waitKey(2)
 
     if key & 0xFF == ord('q'):
-        break
+        breaks
     elif key & 0xFF == ord('m'):
         mKeyPress = True
         wKeyPress = False
@@ -49,8 +49,6 @@ while(True):
         mKeyPress = False
     elif key & 0xFF == ord('s') and wKeyPress:
         print("Using Watersheds Algorithm!")
-    else:
-        mKeyPress = False
         wKeyPress = False
     
 # When everything done, release the capture
