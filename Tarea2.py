@@ -34,10 +34,10 @@ for ms in params['ms']:
 while(True):
 
     if not printMenu:
-        print("This program performs a image segmentation of the images taken with the webcam.")
-        print("Press -ms to execute image segmentation using mean shift algorithm.")
-        print("Press -ws to execute image segmentation using watersheds algorithm.")
-        print("Press q for exit.")
+        print("This program performs image segmentation of the images taken with the webcam.")
+        print("Press ms in image window to execute image segmentation using mean shift algorithm.")
+        print("Press ws in image window to execute image segmentation using watersheds algorithm.")
+        print("Press q in image window for exit.")
         printMenu = True
 
     # Capture frame-by-frame
@@ -63,6 +63,9 @@ while(True):
         print("Using Mean Shift Algorithm!")
         (segmentedImage, labelsImage, numberRegions) = mySegmenter(frame)
         cv2.imshow('Tarea2: Imagen Segmentada', segmentedImage)
+        print("Number of regions: " + str(numberRegions))
+        print("Mask:")
+        print(str(len(labelsImage)) + "x" + str(len(labelsImage[0])))
         print(labelsImage)
         mKeyPress = False
     elif key & 0xFF == ord('s') and wKeyPress:
